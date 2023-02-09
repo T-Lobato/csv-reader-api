@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductDTO {
 
+    @CsvBindByName(column = "CODE")
+    private String code;
+
     @CsvBindByName(column = "NAME")
     private String name;
 
