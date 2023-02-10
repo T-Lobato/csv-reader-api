@@ -5,7 +5,6 @@ import io.github.tlobato.csvreaderapi.helper.CsvReader;
 import io.github.tlobato.csvreaderapi.service.ProductService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +22,6 @@ public class ProductController {
     private final ProductService productService;
     private final CsvReader csvReader;
 
-    @SneakyThrows
     @PostMapping("/create-product")
     @ResponseStatus(HttpStatus.CREATED)
     public void createProduct(MultipartFile file) {

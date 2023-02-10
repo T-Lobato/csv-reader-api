@@ -2,6 +2,8 @@ package io.github.tlobato.csvreaderapi.service;
 
 import io.github.tlobato.csvreaderapi.entity.Product;
 import io.github.tlobato.csvreaderapi.entity.dto.ProductDTO;
+import io.github.tlobato.csvreaderapi.enums.ErrorCode;
+import io.github.tlobato.csvreaderapi.exception.ProductNotFoundException;
 import io.github.tlobato.csvreaderapi.repository.ProductRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,12 @@ public class ProductService {
     }
 
     public ProductDTO getProductByCode(String code) {
-        return mapper.map(productRepository.findByCodeIgnoreCase(code), ProductDTO.class);
+        Product product = productRepository.findByCodeIgnoreCase(code);
+        if (product != null) {
+            return mapper.map(product, ProductDTO.class);
+        } else {
+            throw new ProductNotFoundException(ErrorCode.EC001.getMessage(), ErrorCode.EC001.getCode());
+        }
     }
 
     public List<ProductDTO> getAllProducts() {
