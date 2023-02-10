@@ -20,4 +20,8 @@ public class ProductService {
     public Product save(ProductDTO productDTO) {
         return productRepository.save(mapper.map(productDTO, Product.class));
     }
+
+    public ProductDTO getProductByCode(String code) {
+        return mapper.map(productRepository.findByCodeIgnoreCase(code), ProductDTO.class);
+    }
 }
