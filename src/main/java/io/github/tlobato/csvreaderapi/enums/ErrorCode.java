@@ -9,7 +9,8 @@ import lombok.Getter;
 public enum ErrorCode {
 
     EC001("EC-001", "Product not found!"),
-    EC002("EC-002", "Invalid file format"),
+    EC002("EC-002", "Invalid file format!"),
+    EC003("EC-003", "The file exceeds the configured maximum size!"),
     EC101("EC-101", "Número de campos de dados incompatível com o número de cabeçalhos!");
 
     private final String code;

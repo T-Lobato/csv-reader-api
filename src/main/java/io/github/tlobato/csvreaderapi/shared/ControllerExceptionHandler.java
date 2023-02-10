@@ -6,6 +6,8 @@ import io.github.tlobato.csvreaderapi.exception.InvalidCSVException;
 import io.github.tlobato.csvreaderapi.exception.ProductNotFoundException;
 import io.github.tlobato.csvreaderapi.shared.dto.ErrorResponseDto;
 import java.time.LocalDateTime;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -43,7 +45,6 @@ public class ControllerExceptionHandler {
         errorResponseDto.setTimestamp(LocalDateTime.now());
 
         return errorResponseDto;
-
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -61,5 +62,19 @@ public class ControllerExceptionHandler {
         return errorResponseDto;
 
     }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({FileSizeLimitExceededException.class, SizeLimitExceededException.class})
+    public ErrorResponseDto handleCsvRequiredException(Exception exception, WebRequest request) {
 
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+
+        errorResponseDto.setStatus(HttpStatus.BAD_REQUEST.value());
+        errorResponseDto.setMessage(ErrorCode.EC003.getMessage());
+        errorResponseDto.setInternalCode(ErrorCode.EC003.getCode());
+        errorResponseDto.setPath(request.getDescription(false));
+        errorResponseDto.setTimestamp(LocalDateTime.now());
+
+        return errorResponseDto;
+
+    }
 }
