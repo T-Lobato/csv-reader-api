@@ -3,6 +3,7 @@ package io.github.tlobato.csvreaderapi.service;
 import io.github.tlobato.csvreaderapi.entity.Product;
 import io.github.tlobato.csvreaderapi.entity.dto.ProductDTO;
 import io.github.tlobato.csvreaderapi.repository.ProductRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,13 @@ public class ProductService {
 
     public ProductDTO getProductByCode(String code) {
         return mapper.map(productRepository.findByCodeIgnoreCase(code), ProductDTO.class);
+    }
+
+    public List<ProductDTO> getAllProducts() {
+        return productRepository
+                .findAll()
+                .stream()
+                .map(p -> mapper.map(p, ProductDTO.class))
+                .toList();
     }
 }

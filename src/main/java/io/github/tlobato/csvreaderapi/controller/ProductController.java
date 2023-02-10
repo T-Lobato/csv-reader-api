@@ -38,4 +38,9 @@ public class ProductController {
         return productService.getProductByCode(code);
     }
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductDTO> getAllProducts() {
+        return productService.getAllProducts();
+    }
 }
